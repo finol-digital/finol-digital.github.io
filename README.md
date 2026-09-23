@@ -4,13 +4,14 @@ The public project directory for **https://finol.digital**, hosted by the organi
 
 ## Directory
 
-The build fetches all pages of the organization's public repository list from GitHub without credentials and includes only explicitly public repositories. Projects with GitHub Pages link to their websites; all other projects link to their repositories, regardless of their homepage field. Archived repositories and forks remain included if public. This repository also appears in the directory.
+The build fetches all pages of the organization's public repository list from GitHub without credentials and includes only explicitly public repositories. Projects with GitHub Pages link to their websites; CGS Games explicitly links through `/cgs-games/` to `https://cgs.games/`. All other projects link to their repositories, regardless of their homepage field. Archived repositories and forks remain included if public. This repository also appears in the directory.
 
 GitHub Actions rebuilds and deploys on every push to `main`, daily at 08:23 UTC, or manually through **Actions → Publish project directory → Run workflow**. GitHub can delay scheduled runs or disable them after 60 days of inactivity in a public repository; re-enable the workflow if necessary. The deployed page is static, accessible without JavaScript, and makes no visitor-side API requests. An API failure stops deployment, preserving the last successful site. Visibility changes appear after the next successful deployment.
 
 ## Shortcuts
 
 - `/cgs` (and `/cgs/`) → `https://finol-digital.github.io/Card-Game-Simulator`
+- `/cgs-games` (and `/cgs-games/`) → `https://cgs.games/`
 - `/dominoes` (and `/dominoes/`) → `https://finol-digital.github.io/dominoes-tournament/`
 
 GitHub Pages adds the trailing slash for directory paths. Each shortcut uses a browser redirect with a meta-refresh and clickable link fallback. JavaScript preserves query parameters and fragments, including `?tv=1` for Dominoes. These are static HTML redirects, not custom HTTP 301 rules. GitHub may then redirect the destination to the project's custom domain.

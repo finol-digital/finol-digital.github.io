@@ -26,7 +26,9 @@ test('failed fetch prevents replacing a working catalog with partial or empty co
   await assert.rejects(fetchRepositories(async () => ({ ok: true, json: async () => [] })), /empty/);
 });
 
-test('only Pages repositories use website links', () => {
+test('Pages repositories and the explicit CGS Games shortcut use website links', () => {
+  assert.equal(repositoryLink(publicRepo('cgs-games')), '/cgs-games/');
+  assert.ok(renderRepository(publicRepo('cgs-games'), 0).includes('href="/cgs-games/" aria-label="Visit cgs-games website"'));
   assert.equal(repositoryLink(publicRepo('Card-Game-Simulator-XR', { homepage: 'https://example.com' })), 'https://github.com/finol-digital/Card-Game-Simulator-XR');
   assert.equal(repositoryLink(publicRepo('Card-Game-Simulator', { has_pages: true })), '/cgs/');
   assert.equal(repositoryLink(publicRepo('dominoes-tournament', { has_pages: true })), '/dominoes/');
@@ -41,7 +43,7 @@ test('repository descriptions cannot inject HTML', () => {
 });
 
 test('shortcuts retain query strings and fragments and provide a no-script fallback', async () => {
-  for (const [route, target] of [['cgs', 'https://finol-digital.github.io/Card-Game-Simulator'], ['dominoes', 'https://finol-digital.github.io/dominoes-tournament/']]) {
+  for (const [route, target] of [['cgs', 'https://finol-digital.github.io/Card-Game-Simulator'], ['dominoes', 'https://finol-digital.github.io/dominoes-tournament/'], ['cgs-games', 'https://cgs.games/']]) {
     const html = await readFile(new URL(`../public/${route}/index.html`, import.meta.url), 'utf8');
     let actual;
     vm.runInNewContext(html.match(/<script>(.*?)<\/script>/s)[1], {

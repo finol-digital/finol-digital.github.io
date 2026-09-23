@@ -33,6 +33,7 @@ export async function fetchRepositories(request = fetch) {
 export function repositoryLink(repo) {
   const name = encodeURIComponent(repo.name);
   const source = `https://github.com/${organization}/${name}`;
+  if (repo.name === 'cgs-games') return '/cgs-games/';
   if (!repo.has_pages) return source;
   if (repo.name === 'Card-Game-Simulator') return '/cgs/';
   if (repo.name === 'dominoes-tournament') return '/dominoes/';
@@ -43,7 +44,7 @@ export function repositoryLink(repo) {
 export function renderRepository(repo, index) {
   const source = `https://github.com/${organization}/${encodeURIComponent(repo.name)}`;
   const description = repo.description ? `<p>${escapeHtml(repo.description)}</p>` : '';
-  const links = repo.has_pages
+  const links = repo.has_pages || repo.name === 'cgs-games'
     ? `<a href="${repositoryLink(repo)}" aria-label="Visit ${escapeHtml(repo.name)} website">Website <span aria-hidden="true">↗</span></a><a class="source" href="${source}" aria-label="View ${escapeHtml(repo.name)} on GitHub">GitHub</a>`
     : `<a href="${source}" aria-label="View ${escapeHtml(repo.name)} on GitHub">GitHub <span aria-hidden="true">↗</span></a>`;
   return `<li class="project">
