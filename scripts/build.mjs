@@ -27,7 +27,10 @@ export async function fetchRepositories(request = fetch) {
     if (batch.length < 100) break;
   }
   if (!repositories.length) throw new Error('Refusing to publish an empty repository directory');
-  return repositories.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
+  return repositories.sort((a, b) =>
+    Number(a.name === `${organization}.github.io`) - Number(b.name === `${organization}.github.io`)
+    || a.name.localeCompare(b.name, 'en', { sensitivity: 'base' })
+  );
 }
 
 export function repositoryLink(repo) {
